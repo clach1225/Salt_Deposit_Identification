@@ -31,8 +31,8 @@ def aug(train_image_path = r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_I
     #This takes all the augmentated images and masks and creates places them
     # in a two seperate folders into the train directory.
 
-    srcpath = r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_Identification-master\data\train\images\output"
-    destpath = r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_Identification-master\data\train"
+    srcpath = str(train_image_path) + r"\output"
+    destpath = path_train
 
     for root, subFolders, files in os.walk(srcpath):
         for file in files:
@@ -44,10 +44,10 @@ def aug(train_image_path = r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_I
     #Renames files in train directory for ease.
 
     #Augmented_Masks:
-    os.rename(src = r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_Identification-master\data\train\_groundt", dst=r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_Identification-master\data\train\aug_masks")
+    os.rename(src = str(path_train) + r"/_groundt", dst=str(path_train) + r"/aug_masks")
 
     #Augmented_Images:
-    os.rename(src = r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_Identification-master\data\train\images_o", dst=r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_Identification-master\data\train\aug_images")
+    os.rename(src = str(path_train) + r"/images_o", dst=str(path_train) + r"/aug_images")
 
     aug_train_images_ids = next(os.walk(path_train+"/aug_images"))[2]
     aug_train_masks_ids = next(os.walk(path_train+"/aug_masks"))[2]
@@ -59,7 +59,7 @@ def aug(train_image_path = r"C:\Users\buckf\Documents\Practicum_2\Salt_Deposit_I
     im_chan = 1
 
     from keras.preprocessing import image
-    
+
     # Get and resize train images and masks
     Aug_X_train = np.zeros((len(aug_train_images_ids), im_height, im_width, im_chan), dtype=np.uint8)
     Aug_Y_train = np.zeros((len(aug_train_images_ids), im_height, im_width, 1), dtype=np.bool)
